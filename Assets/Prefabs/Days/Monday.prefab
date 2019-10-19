@@ -660,17 +660,6 @@ MonoBehaviour:
   - {fileID: 1801642190294174292}
   - {fileID: 1801642189338906569}
   - {fileID: 1801642191132108549}
-  remainderCanvas: {fileID: 0}
-  day: {fileID: 0}
-  month: {fileID: 0}
-  year: {fileID: 0}
-  hour: {fileID: 0}
-  minute: {fileID: 0}
-  remainderText: {fileID: 0}
-  saveButton: {fileID: 0}
-  rightClickDayCanvas: {fileID: 0}
-  addButton: {fileID: 0}
-  showButton: {fileID: 0}
   ringLight: {fileID: 8206078239968836665}
 --- !u!60 &3941458209450335158
 PolygonCollider2D:
@@ -729,7 +718,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1801642190865702378}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1801642190210907055}

@@ -24,4 +24,10 @@ public class CanvasController : MonoBehaviour
         if (_activeCanvas != null) _activeCanvas.SetActive(false);
         _activeCanvas = null;
     }
+
+    public void CloseMainCanvas(GameObject canvas)
+    {
+        canvas.SetActive(false);
+        IsMainCanvasOpen = false;
+    }
 }

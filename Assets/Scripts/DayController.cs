@@ -100,6 +100,11 @@ public class DayController : MonoBehaviour
         _sortedRemainders.Remove(index);
         RefreshRemainders();
     }
+
+    public SortedList<int, RemainderContainer> GetSortedRemainderList()
+    {
+        return _sortedRemainders;
+    }
     private void CheckDay()
     {
         DateTime dateTime = DateTime.Now;

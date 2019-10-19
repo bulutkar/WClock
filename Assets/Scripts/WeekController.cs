@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,6 +20,10 @@ public class WeekController : MonoBehaviour
     [SerializeField] private Canvas rightClickDayCanvas;
     [SerializeField] private Button addButton;
     [SerializeField] private Button showButton;
+
+    [SerializeField] private GameObject allRemainderListGameObject;
+    [SerializeField] private Transform viewParent;
+    [SerializeField] private GameObject remainderView;
 
     private Camera camera;
     private Transform rightClickTransform;
@@ -51,6 +56,35 @@ public class WeekController : MonoBehaviour
         saveButton.onClick.RemoveAllListeners();
     }
 
+    public void ShowTheDay(int index)
+    {
+        var controller = dayControllers[index];
+        var sortedList = controller.GetSortedRemainderList();
+        for (int i = 0; i < viewParent.childCount; i++)
+        {
+            var obj = viewParent.GetChild(i).gameObject;
+            obj.SetActive(false);
+            Destroy(obj);
+        }
+        for (int i = 0; i < sortedList.Count; i++)
+        {
+            GameObject view = Instantiate(remainderView, viewParent);
+
+            Vector3 remainPos = view.transform.localPosition;
+            remainPos.y -= i * 110;
+
+            view.transform.localPosition = remainPos;
+            TextMeshProUGUI dayText = view.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI timeText = view.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI contextText = view.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+
+            dayText.text = sortedList.Values[i].DateTime.ToShortDateString();
+            timeText.text = sortedList.Values[i].DateTime.ToShortTimeString();
+            contextText.text = sortedList.Values[i].Text;
+        }
+
+    }
+
     private void AddOnClick()
     {
         CanvasController.Instance.CloseActiveCanvas();
@@ -58,7 +92,12 @@ public class WeekController : MonoBehaviour
         CanvasController.IsMainCanvasOpen = true;
     }
 
-    private void ShowOnClick() { }
+    private void ShowOnClick()
+    {
+        CanvasController.IsMainCanvasOpen = true;
+        allRemainderListGameObject.SetActive(true);
+        ShowTheDay(0);
+    }
 
     private void SaveOnClick()
     {
@@ -87,4 +126,5 @@ public class WeekController : MonoBehaviour
 
         return index;
     }
+
 }

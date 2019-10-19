@@ -2475,7 +2475,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5003031434318456610}
   m_LocalRotation: {x: -0, y: 0, z: -0.42261845, w: -0.9063077}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -3}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5003031436029643987}
@@ -3001,17 +3001,6 @@ MonoBehaviour:
   - {fileID: 5003031434348022999}
   - {fileID: 5003031434847270312}
   - {fileID: 5003031436127448613}
-  remainderCanvas: {fileID: 0}
-  day: {fileID: 0}
-  month: {fileID: 0}
-  year: {fileID: 0}
-  hour: {fileID: 0}
-  minute: {fileID: 0}
-  remainderText: {fileID: 0}
-  saveButton: {fileID: 0}
-  rightClickDayCanvas: {fileID: 0}
-  addButton: {fileID: 0}
-  showButton: {fileID: 0}
   ringLight: {fileID: 5368175998846563144}
 --- !u!60 &214229652828437833
 PolygonCollider2D:
