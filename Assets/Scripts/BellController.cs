@@ -6,6 +6,7 @@ using UnityEngine;
 public class BellController : MonoBehaviour
 {
     private RemainderContainer _remainder;
+    [SerializeField] private DayController dayController;
     [SerializeField] private GameObject rightClickCanvas;
     [SerializeField] private GameObject leftClickCanvas;
 
