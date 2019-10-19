@@ -13,7 +13,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Bells
   - 
   - 
   - 
@@ -40,4 +40,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: MainCanvas
+    uniqueID: 369480779
+    locked: 0
+  - name: Bells
+    uniqueID: 2741728265
+    locked: 0
+  - name: Remainder
+    uniqueID: 9497843
     locked: 0
