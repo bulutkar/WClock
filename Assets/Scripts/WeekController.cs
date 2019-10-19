@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -62,6 +63,7 @@ public class WeekController : MonoBehaviour
     {
         var controller = dayControllers[index];
         var sortedList = controller.GetSortedRemainderList();
+        var permanentIndex = index;
         for (int i = 0; i < viewParent.childCount; i++)
         {
             var obj = viewParent.GetChild(i).gameObject;
@@ -70,6 +72,7 @@ public class WeekController : MonoBehaviour
         }
         for (int i = 0; i < sortedList.Count; i++)
         {
+            var everyIndex = i;
             GameObject view = Instantiate(remainderView, viewParent);
 
             Vector3 remainPos = view.transform.localPosition;
@@ -79,10 +82,31 @@ public class WeekController : MonoBehaviour
             TextMeshProUGUI dayText = view.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI timeText = view.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI contextText = view.transform.GetChild(2).GetComponent<TextMeshProUGUI>();
+            Button delButton = view.transform.GetChild(3).GetComponent<Button>();
+            Button editButton = view.transform.GetChild(4).GetComponent<Button>();
 
             dayText.text = sortedList.Values[i].DateTime.ToShortDateString();
             timeText.text = sortedList.Values[i].DateTime.ToShortTimeString();
             contextText.text = sortedList.Values[i].Text;
+            delButton.onClick.AddListener((() =>
+            {
+                controller.RemoveRemainder(sortedList.Values[everyIndex]);
+                ShowTheDay(permanentIndex);
+            }));
+            editButton.onClick.AddListener((() =>
+            {
+                CanvasController.Instance.CloseActiveCanvas();
+                CanvasController.IsMainCanvasOpen = false;
+                allRemainderListGameObject.SetActive(false);
+                EditController.Instance.saveButton.onClick.AddListener((() =>
+                {
+                    controller.RemoveRemainder(sortedList.Values[everyIndex]);
+                    EditController.Instance.SaveOnClick();
+                    EditController.Instance.saveButton.onClick.RemoveAllListeners();
+                }));
+                EditController.Instance.LoadCanvas(sortedList.Values[everyIndex]);
+                ShowTheDay(permanentIndex);
+            }));
         }
 
     }
