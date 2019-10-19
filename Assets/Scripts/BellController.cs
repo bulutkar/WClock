@@ -5,15 +5,20 @@ using UnityEngine;
 
 public class BellController : MonoBehaviour
 {
+    private RemainderContainer _remainder;
     [SerializeField] private GameObject rightClickCanvas;
+    [SerializeField] private GameObject leftClickCanvas;
 
+    private void Awake()
+    {
+        _remainder = new RemainderContainer();
+    }
 
     void Start()
     {
-        rightClickCanvas.transform.position = transform.position + Vector3.right * 0.25f;
+        rightClickCanvas.transform.position = transform.position + Vector3.right * 0.5f;
     }
 
-    // Update is called once per frame
     void Update()
     {
 
@@ -21,12 +26,23 @@ public class BellController : MonoBehaviour
 
     private void OnMouseOver()
     {
-        if (Input.GetMouseButtonDown(1)) rightClickCanvas.SetActive(true);
-        Debug.Log("enter");
+        if (CanvasController.IsMainCanvasOpen) return;
+        if (Input.GetMouseButtonDown(0))
+        {
+            CanvasController.Instance.CloseActiveCanvas();
+            CanvasController.Instance.AddActiveCanvas(leftClickCanvas);
+            leftClickCanvas?.SetActive(true);
+        }
+        else if (Input.GetMouseButtonDown(1))
+        {
+            CanvasController.Instance.CloseActiveCanvas();
+            CanvasController.Instance.AddActiveCanvas(rightClickCanvas);
+            rightClickCanvas?.SetActive(true);
+        }
     }
 
-    private void OnMouseExit()
+    public void AddRemainder(RemainderContainer remainder)
     {
-        rightClickCanvas.SetActive(false);
+        _remainder = remainder;
     }
 }
