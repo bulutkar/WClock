@@ -143,7 +143,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28964cb118768ba41921ec335c88d1e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayController: {fileID: 0}
+  dayController: {fileID: 1801642190507525368}
   rightClickCanvas: {fileID: 7779489106330819156}
   leftClickCanvas: {fileID: 0}
 --- !u!1 &1801642190052121313
@@ -289,7 +289,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28964cb118768ba41921ec335c88d1e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayController: {fileID: 0}
+  dayController: {fileID: 1801642190507525368}
   rightClickCanvas: {fileID: 7779489104580451967}
   leftClickCanvas: {fileID: 0}
 --- !u!1 &1801642190210907048
@@ -435,7 +435,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28964cb118768ba41921ec335c88d1e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayController: {fileID: 0}
+  dayController: {fileID: 1801642190507525368}
   rightClickCanvas: {fileID: 7779489105145724425}
   leftClickCanvas: {fileID: 0}
 --- !u!1 &1801642190294174292
@@ -581,7 +581,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28964cb118768ba41921ec335c88d1e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayController: {fileID: 0}
+  dayController: {fileID: 1801642190507525368}
   rightClickCanvas: {fileID: 7779489105908112377}
   leftClickCanvas: {fileID: 0}
 --- !u!1 &1801642190507525370
@@ -873,7 +873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28964cb118768ba41921ec335c88d1e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayController: {fileID: 0}
+  dayController: {fileID: 1801642190507525368}
   rightClickCanvas: {fileID: 7779489104947364730}
   leftClickCanvas: {fileID: 0}
 --- !u!1 &1801642191132108549
@@ -1019,7 +1019,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28964cb118768ba41921ec335c88d1e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayController: {fileID: 0}
+  dayController: {fileID: 1801642190507525368}
   rightClickCanvas: {fileID: 7779489105636445927}
   leftClickCanvas: {fileID: 0}
 --- !u!1 &7779489104580451967

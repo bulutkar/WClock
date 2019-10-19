@@ -8,6 +8,7 @@ using UnityEngine.UI;
 
 public class WeekController : MonoBehaviour
 {
+    public static WeekController Instance;
     [SerializeField] private DayController[] dayControllers;
     [SerializeField] private Canvas remainderCanvas;
     [SerializeField] private TMP_InputField remainderText;
@@ -29,6 +30,7 @@ public class WeekController : MonoBehaviour
     private Transform rightClickTransform;
     private void Awake()
     {
+        Instance = this;
         addButton.onClick.AddListener(AddOnClick);
         showButton.onClick.AddListener(ShowOnClick);
         saveButton.onClick.AddListener(SaveOnClick);
@@ -94,6 +96,7 @@ public class WeekController : MonoBehaviour
 
     private void ShowOnClick()
     {
+        CanvasController.Instance.CloseActiveCanvas();
         CanvasController.IsMainCanvasOpen = true;
         allRemainderListGameObject.SetActive(true);
         ShowTheDay(0);

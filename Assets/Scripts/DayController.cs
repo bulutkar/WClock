@@ -97,7 +97,7 @@ public class DayController : MonoBehaviour
     public void RemoveRemainder(RemainderContainer remainder)
     {
         var index = _sortedRemainders.IndexOfValue(remainder);
-        _sortedRemainders.Remove(index);
+        _sortedRemainders.RemoveAt(index);
         RefreshRemainders();
     }
 
@@ -151,8 +151,9 @@ public class DayController : MonoBehaviour
         {
             if (i >= _sortedRemainders.Count) break;
             var tempRemainder = _sortedRemainderPlaces[i];
-            tempRemainder.AddRemainder(_sortedRemainders.Values[i]);
             _activeRemainders.Add(tempRemainder.gameObject);
+            tempRemainder.gameObject.SetActive(true);
+            tempRemainder.AddRemainder(_sortedRemainders.Values[i]);
             _emptyRemainder.Remove(tempRemainder.gameObject);
         }
         SetActiveAllActiveRemainders();

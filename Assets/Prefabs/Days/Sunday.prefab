@@ -2630,7 +2630,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28964cb118768ba41921ec335c88d1e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayController: {fileID: 0}
+  dayController: {fileID: 5003031435108533681}
   rightClickCanvas: {fileID: 8020529438529484021}
   leftClickCanvas: {fileID: 0}
 --- !u!1 &5003031434847270312
@@ -2776,7 +2776,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28964cb118768ba41921ec335c88d1e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayController: {fileID: 0}
+  dayController: {fileID: 5003031435108533681}
   rightClickCanvas: {fileID: 3626858532304092850}
   leftClickCanvas: {fileID: 0}
 --- !u!1 &5003031434871768328
@@ -2922,7 +2922,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28964cb118768ba41921ec335c88d1e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayController: {fileID: 0}
+  dayController: {fileID: 5003031435108533681}
   rightClickCanvas: {fileID: 8907990001254453081}
   leftClickCanvas: {fileID: 0}
 --- !u!1 &5003031435108533680
@@ -3178,7 +3178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28964cb118768ba41921ec335c88d1e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayController: {fileID: 0}
+  dayController: {fileID: 5003031435108533681}
   rightClickCanvas: {fileID: 4658979532069627950}
   leftClickCanvas: {fileID: 0}
 --- !u!1 &5003031436029643986
@@ -3324,7 +3324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28964cb118768ba41921ec335c88d1e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayController: {fileID: 0}
+  dayController: {fileID: 5003031435108533681}
   rightClickCanvas: {fileID: 6105411458723471204}
   leftClickCanvas: {fileID: 0}
 --- !u!1 &5003031436127448613
@@ -3470,7 +3470,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28964cb118768ba41921ec335c88d1e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dayController: {fileID: 0}
+  dayController: {fileID: 5003031435108533681}
   rightClickCanvas: {fileID: 6696995723623932116}
   leftClickCanvas: {fileID: 0}
 --- !u!1 &5003330404278216458
