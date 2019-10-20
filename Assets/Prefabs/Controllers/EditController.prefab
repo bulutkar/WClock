@@ -59,4 +59,5 @@ MonoBehaviour:
   hour: {fileID: 0}
   minute: {fileID: 0}
   saveButton: {fileID: 0}
+  alarmToggle: {fileID: 0}
   BellController: {fileID: 0}

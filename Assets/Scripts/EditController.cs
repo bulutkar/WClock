@@ -17,6 +17,7 @@ public class EditController : MonoBehaviour
     [SerializeField] private TMP_Dropdown hour;
     [SerializeField] private TMP_Dropdown minute;
     [SerializeField] public Button saveButton;
+    [SerializeField] private Toggle alarmToggle;
 
     [HideInInspector] public BellController BellController;
 
@@ -42,6 +43,7 @@ public class EditController : MonoBehaviour
         remainder.Hour = Convert.ToInt32(hour.options[hour.value].text);
         remainder.Minute = Convert.ToInt32(minute.options[minute.value].text);
         remainder.DateTime = new DateTime(remainder.Year, remainder.Month, remainder.Day, remainder.Hour, remainder.Minute, 0);
+        remainder.Alarm = alarmToggle.isOn;
         var index = FindTheDayController(remainder.DateTime.DayOfWeek.ToString());
         dayControllers[index].AddRemainder(remainder);
         remainderCanvas.gameObject.SetActive(false);

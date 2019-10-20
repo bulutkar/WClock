@@ -22,6 +22,7 @@ public class WeekController : MonoBehaviour
     [SerializeField] private Canvas rightClickDayCanvas;
     [SerializeField] private Button addButton;
     [SerializeField] private Button showButton;
+    [SerializeField] private Toggle alarmToggle;
 
     [SerializeField] private GameObject allRemainderListGameObject;
     [SerializeField] private Transform viewParent;
@@ -136,11 +137,26 @@ public class WeekController : MonoBehaviour
         remainder.Hour = Convert.ToInt32(hour.options[hour.value].text);
         remainder.Minute = Convert.ToInt32(minute.options[minute.value].text);
         remainder.DateTime = new DateTime(remainder.Year, remainder.Month, remainder.Day, remainder.Hour, remainder.Minute, 0);
+        remainder.Alarm = alarmToggle.isOn;
         var index = FindTheDayController(remainder.DateTime.DayOfWeek.ToString());
         dayControllers[index].AddRemainder(remainder);
         remainderCanvas.gameObject.SetActive(false);
         remainderText.text = "";
         CanvasController.IsMainCanvasOpen = false;
+    }
+
+    private RemainderContainer CreateRemainder(string text, int year, int month, int day, int hour, int minute, bool alarm)
+    {
+        RemainderContainer remainder = new RemainderContainer();
+        remainder.Text = text;
+        remainder.Year = year;
+        remainder.Month = month;
+        remainder.Day = day;
+        remainder.Hour = hour;
+        remainder.Minute = minute;
+        remainder.DateTime = new DateTime(year, month, day, hour, minute, 0);
+        remainder.Alarm = alarm;
+        return remainder;
     }
 
     private int FindTheDayController(string dayOfWeek)

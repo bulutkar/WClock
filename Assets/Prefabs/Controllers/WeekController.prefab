@@ -101,6 +101,7 @@ MonoBehaviour:
   rightClickDayCanvas: {fileID: 0}
   addButton: {fileID: 0}
   showButton: {fileID: 0}
+  alarmToggle: {fileID: 0}
   allRemainderListGameObject: {fileID: 0}
   viewParent: {fileID: 0}
   remainderView: {fileID: 4691265088005508480, guid: d5867c6320abb6648b0470571b88a47b,

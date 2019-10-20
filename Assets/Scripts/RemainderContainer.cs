@@ -13,4 +13,5 @@ public class RemainderContainer
     public int Year;
     public int Hour;
     public int Minute;
+    public bool Alarm;
 }
