@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
@@ -15,21 +17,29 @@ public class DayController : MonoBehaviour
 
     private SortedList<int, BellController> _sortedRemainderPlaces;
     private SortedList<int, RemainderContainer> _sortedRemainders;
+    private List<RemainderContainer> _remainderList;
     private List<GameObject> _activeRemainders;
     private List<GameObject> _emptyRemainder;
 
+    private string savePath;
+
     void Awake()
     {
+        savePath = Application.persistentDataPath + "/" + myDay + "save.dat";
+
         _sortedRemainders = new SortedList<int, RemainderContainer>();
+
         _sortedRemainderPlaces = new SortedList<int, BellController>();
+        CreateSortedRemainderPlaces();
+
         _activeRemainders = new List<GameObject>();
         _emptyRemainder = new List<GameObject>();
+        _remainderList = new List<RemainderContainer>();
+
+        LoadData();
+
         CheckDay();
         DigitalClock.OnDayChanged += CheckDay;
-    }
-    void Start()
-    {
-        CreateSortedRemainderPlaces();
     }
     void OnDestroy()
     {
@@ -92,6 +102,64 @@ public class DayController : MonoBehaviour
 
         _sortedRemainders.Clear();
         _sortedRemainders = tempSorted;
+        FillRemainderList();
+        RefreshRemainders();
+        SaveData();
+    }
+
+    public void AddRemainderInLoad(RemainderContainer remainder)
+    {
+        List<RemainderContainer> temp = new List<RemainderContainer>();
+        SortedList<int, RemainderContainer> tempSorted = new SortedList<int, RemainderContainer>();
+        if (_sortedRemainders.Count > 0)
+        {
+            foreach (var item in _sortedRemainders.Values)
+            {
+                temp.Add(item);
+            }
+        }
+
+        if (temp.Count > 0)
+        {
+            foreach (var item in temp)
+            {
+                var tempSpan = item.DateTime - DateTime.Now;
+                int i = 0;
+                while (true)
+                {
+                    try
+                    {
+                        tempSorted.Add(Convert.ToInt32(tempSpan.TotalSeconds + i), item);
+                        break;
+                    }
+                    catch (Exception e)
+                    {
+                        i += 1;
+                    }
+                }
+
+            }
+        }
+
+        TimeSpan timeSpan = remainder.DateTime - DateTime.Now;
+
+        int counter = 0;
+        while (true)
+        {
+            try
+            {
+                tempSorted.Add(Convert.ToInt32(timeSpan.TotalSeconds + counter), remainder);
+                break;
+            }
+            catch (Exception e)
+            {
+                counter += 1;
+            }
+        }
+
+        _sortedRemainders.Clear();
+        _sortedRemainders = tempSorted;
+        FillRemainderList();
         RefreshRemainders();
     }
     public void RemoveRemainder(RemainderContainer remainder)
@@ -99,8 +167,9 @@ public class DayController : MonoBehaviour
         var index = _sortedRemainders.IndexOfValue(remainder);
         _sortedRemainders.RemoveAt(index);
         RefreshRemainders();
+        FillRemainderList();
+        SaveData();
     }
-
     public SortedList<int, RemainderContainer> GetSortedRemainderList()
     {
         return _sortedRemainders;
@@ -157,5 +226,51 @@ public class DayController : MonoBehaviour
             _emptyRemainder.Remove(tempRemainder.gameObject);
         }
         SetActiveAllActiveRemainders();
+    }
+    private RemainderContainer CreateRemainder(string text, int year, int month, int day, int hour, int minute, bool alarm)
+    {
+        RemainderContainer remainder = new RemainderContainer();
+        remainder.Text = text;
+        remainder.Year = year;
+        remainder.Month = month;
+        remainder.Day = day;
+        remainder.Hour = hour;
+        remainder.Minute = minute;
+        remainder.DateTime = new DateTime(year, month, day, hour, minute, 0);
+        remainder.Alarm = alarm;
+        return remainder;
+    }
+    private void FillRemainderList()
+    {
+        _remainderList.Clear();
+        foreach (var remainder in _sortedRemainders.Values)
+        {
+            _remainderList.Add(remainder);
+        }
+    }
+
+    private void SaveData()
+    {
+        FileStream fs = new FileStream(savePath, FileMode.Create);
+        BinaryFormatter bf = new BinaryFormatter();
+        bf.Serialize(fs, _remainderList);
+        fs.Close();
+    }
+    private void LoadData()
+    {
+        List<RemainderContainer> items = new List<RemainderContainer>();
+        if (!File.Exists(savePath)) return;
+        using (Stream stream = File.Open(savePath, FileMode.Open))
+        {
+            var bf = new BinaryFormatter();
+
+            items = (List<RemainderContainer>)bf.Deserialize(stream);
+        }
+
+        if (items.Count < 1) return;
+        foreach (var remainder in items)
+        {
+            AddRemainderInLoad(remainder);
+        }
     }
 }

@@ -22,6 +22,8 @@ public class WeekController : MonoBehaviour
     [SerializeField] private Canvas rightClickDayCanvas;
     [SerializeField] private Button addButton;
     [SerializeField] private Button showButton;
+    [SerializeField] private Canvas settingsCanvas;
+    [SerializeField] private Button settingsButton;
     [SerializeField] private Toggle alarmToggle;
 
     [SerializeField] private GameObject allRemainderListGameObject;
@@ -115,7 +117,7 @@ public class WeekController : MonoBehaviour
     private void AddOnClick()
     {
         CanvasController.Instance.CloseActiveCanvas();
-        remainderCanvas?.gameObject?.SetActive(true);
+        remainderCanvas.gameObject.SetActive(true);
         CanvasController.IsMainCanvasOpen = true;
     }
 
@@ -144,7 +146,6 @@ public class WeekController : MonoBehaviour
         remainderText.text = "";
         CanvasController.IsMainCanvasOpen = false;
     }
-
     private RemainderContainer CreateRemainder(string text, int year, int month, int day, int hour, int minute, bool alarm)
     {
         RemainderContainer remainder = new RemainderContainer();

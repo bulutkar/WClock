@@ -29,6 +29,7 @@ public class EditController : MonoBehaviour
     public void LoadCanvas(RemainderContainer remainder)
     {
         remainderText.text = remainder.Text;
+        alarmToggle.isOn = remainder.Alarm;
         CanvasController.Instance.CloseActiveCanvas();
         remainderCanvas?.gameObject?.SetActive(true);
         CanvasController.IsMainCanvasOpen = true;

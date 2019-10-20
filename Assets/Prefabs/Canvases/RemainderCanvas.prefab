@@ -274,11 +274,11 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_MethodName: CloseMainCanvas
-        m_Mode: 2
+        m_MethodName: CloseCanvas
+        m_Mode: 1
         m_Arguments:
-          m_ObjectArgument: {fileID: 8757516793889988011}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -8162,7 +8162,7 @@ PrefabInstance:
     - target: {fileID: 8872748530751690415, guid: f8ac7a751c4649c4a9ffde85772b611f,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.055221558
+      value: -0.0552063
       objectReference: {fileID: 0}
     - target: {fileID: 8872748530751690415, guid: f8ac7a751c4649c4a9ffde85772b611f,
         type: 3}
