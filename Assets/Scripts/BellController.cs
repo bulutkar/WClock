@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class BellController : MonoBehaviour
 {
-    [SerializeField] private RemainderContainer _remainder;
+    [SerializeField] private RemainderContainer _remainder = new RemainderContainer();
     [SerializeField] private DayController dayController;
     private GameObject rightClickCanvas;
     private GameObject doneCanvas;
@@ -18,7 +18,7 @@ public class BellController : MonoBehaviour
     private TextMeshProUGUI _text;
     private Button _doneButton;
     private AudioSource _audioSource;
-
+    private bool _isRemainderStart;
     [SerializeField] private bool _isDone;
 
     private void Awake()
@@ -35,8 +35,8 @@ public class BellController : MonoBehaviour
 
         gameObject.AddComponent<AudioSource>();
         _audioSource = GetComponent<AudioSource>();
-
-        _remainder = new RemainderContainer();
+        _audioSource.playOnAwake = false;
+        _audioSource.loop = true;
     }
 
     void Start()
@@ -46,22 +46,24 @@ public class BellController : MonoBehaviour
 
     private void Update()
     {
-        if (!_isDone && _remainder != null)
+        if (!_isDone && _isRemainderStart)
         {
             var timeSpan = _remainder.DateTime - DateTime.Now;
             if (timeSpan.TotalSeconds <= 0)
             {
                 _isDone = true;
                 _audioSource.clip = SoundManager.Instance.GetChosenClip();
-                if (_audioSource.clip != null) _audioSource.Play();
+                if (_remainder.Alarm && _audioSource.clip != null) _audioSource.Play();
                 _text.text = _remainder.Text;
                 _doneButton.onClick.AddListener((() =>
                 {
+                    _audioSource.Stop();
                     dayController.RemoveRemainder(_remainder);
                     doneCanvas.SetActive(false);
                     _doneButton.onClick.RemoveAllListeners();
                 }));
                 doneCanvas.SetActive(true);
+                _isRemainderStart = false;
             }
         }
     }
@@ -91,6 +93,7 @@ public class BellController : MonoBehaviour
     {
         _remainder = remainder;
         _isDone = false;
+        _isRemainderStart = true;
     }
 
     public void OnDelete()

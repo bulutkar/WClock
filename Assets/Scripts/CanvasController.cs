@@ -1,18 +1,33 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
+using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class CanvasController : MonoBehaviour
 {
-    [HideInInspector] public static CanvasController Instance;
+    public static CanvasController Instance;
+    [SerializeField] private Sprite[] wallpapers;
+    [SerializeField] private Image background;
+    private Sprite _defaultBg;
     private GameObject _activeCanvas = null;
-
+    private SaveDataContainer saveDataContainer;
     public static bool IsMainCanvasOpen;
+    public bool isWallpaperDynamic;
+    public int defaultBgIndex;
 
+    private string savePath;
     private void Awake()
     {
         Instance = this;
+        savePath = Application.persistentDataPath + "/wallpaper.dat";
+        saveDataContainer = new SaveDataContainer();
+        LoadData();
+        _defaultBg = wallpapers[defaultBgIndex];
+        SetWallpaperInitially();
     }
 
     public void AddActiveCanvas(GameObject canvas)
@@ -29,5 +44,72 @@ public class CanvasController : MonoBehaviour
     {
         canvas.SetActive(false);
         IsMainCanvasOpen = false;
+    }
+
+    private void SetWallpaperInitially()
+    {
+        if (isWallpaperDynamic)
+        {
+            ChangeWallpaperDynamically();
+        }
+        else
+        {
+            SetWallpaperAsDefault();
+        }
+    }
+    public void ChangeWallpaperDynamically()
+    {
+        //Some weather api things;
+    }
+
+    public void SetDefaultBg(int index)
+    {
+        defaultBgIndex = index;
+        saveDataContainer.defaultBgIndex = defaultBgIndex;
+        _defaultBg = wallpapers[defaultBgIndex];
+        SetWallpaperAsDefault();
+        SaveData();
+    }
+
+    public void SetWallpaperAsDefault()
+    {
+        background.sprite = _defaultBg;
+    }
+
+    public void ChangeDynamicOption(bool dynamic)
+    {
+        isWallpaperDynamic = dynamic;
+        saveDataContainer.isWallpaperDynamic = isWallpaperDynamic;
+        SaveData();
+    }
+    private void SaveData()
+    {
+        FileStream fs = new FileStream(savePath, FileMode.Create);
+        BinaryFormatter bf = new BinaryFormatter();
+        bf.Serialize(fs, saveDataContainer);
+        fs.Close();
+    }
+    private void LoadData()
+    {
+        if (!File.Exists(savePath))
+        {
+            saveDataContainer.defaultBgIndex = defaultBgIndex;
+            saveDataContainer.isWallpaperDynamic = isWallpaperDynamic;
+            return;
+        }
+        using (Stream stream = File.Open(savePath, FileMode.Open))
+        {
+            var bf = new BinaryFormatter();
+
+            saveDataContainer = (SaveDataContainer)bf.Deserialize(stream);
+            isWallpaperDynamic = saveDataContainer.isWallpaperDynamic;
+            defaultBgIndex = saveDataContainer.defaultBgIndex;
+        }
+    }
+    [Serializable]
+    class SaveDataContainer
+    {
+        public bool isWallpaperDynamic;
+        public int defaultBgIndex;
     }
 }

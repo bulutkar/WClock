@@ -26,7 +26,6 @@ public class DayController : MonoBehaviour
     void Awake()
     {
         savePath = Application.persistentDataPath + "/" + myDay + "save.dat";
-
         _sortedRemainders = new SortedList<int, RemainderContainer>();
 
         _sortedRemainderPlaces = new SortedList<int, BellController>();
@@ -35,12 +34,15 @@ public class DayController : MonoBehaviour
         _activeRemainders = new List<GameObject>();
         _emptyRemainder = new List<GameObject>();
         _remainderList = new List<RemainderContainer>();
-
-        LoadData();
-
         CheckDay();
         DigitalClock.OnDayChanged += CheckDay;
     }
+
+    private void Start()
+    {
+        LoadData();
+    }
+
     void OnDestroy()
     {
         if (DigitalClock.OnDayChanged != null) DigitalClock.OnDayChanged -= CheckDay;
@@ -221,8 +223,8 @@ public class DayController : MonoBehaviour
             if (i >= _sortedRemainders.Count) break;
             var tempRemainder = _sortedRemainderPlaces[i];
             _activeRemainders.Add(tempRemainder.gameObject);
-            tempRemainder.gameObject.SetActive(true);
             tempRemainder.AddRemainder(_sortedRemainders.Values[i]);
+            tempRemainder.gameObject.SetActive(true);
             _emptyRemainder.Remove(tempRemainder.gameObject);
         }
         SetActiveAllActiveRemainders();

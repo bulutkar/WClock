@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class WeekController : MonoBehaviour
@@ -53,6 +54,14 @@ public class WeekController : MonoBehaviour
             rightClickTransform.position = camera.ScreenToWorldPoint(mousePos) + Vector3.right * 0.5f;
             rightClickDayCanvas.gameObject?.SetActive(true);
             CanvasController.Instance.AddActiveCanvas(rightClickDayCanvas.gameObject);
+        }
+        else if (Input.GetMouseButtonDown(0))
+        {
+            if (!EventSystem.current.IsPointerOverGameObject())
+            {
+                CanvasController.Instance.CloseActiveCanvas();
+            }
+            
         }
     }
     private void OnDestroy()
