@@ -55,14 +55,7 @@ public class WeekController : MonoBehaviour
             rightClickDayCanvas.gameObject?.SetActive(true);
             CanvasController.Instance.AddActiveCanvas(rightClickDayCanvas.gameObject);
         }
-        else if (Input.GetMouseButtonDown(0))
-        {
-            if (!EventSystem.current.IsPointerOverGameObject())
-            {
-                CanvasController.Instance.CloseActiveCanvas();
-            }
-            
-        }
+        
     }
     private void OnDestroy()
     {

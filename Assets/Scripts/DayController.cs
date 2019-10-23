@@ -21,11 +21,11 @@ public class DayController : MonoBehaviour
     private List<GameObject> _activeRemainders;
     private List<GameObject> _emptyRemainder;
 
-    private string savePath;
+    private string _savePath;
 
     void Awake()
     {
-        savePath = Application.persistentDataPath + "/" + myDay + "save.dat";
+        _savePath = Application.persistentDataPath + "/" + myDay + "save.dat";
         _sortedRemainders = new SortedList<int, RemainderContainer>();
 
         _sortedRemainderPlaces = new SortedList<int, BellController>();
@@ -253,7 +253,7 @@ public class DayController : MonoBehaviour
 
     private void SaveData()
     {
-        FileStream fs = new FileStream(savePath, FileMode.Create);
+        FileStream fs = new FileStream(_savePath, FileMode.Create);
         BinaryFormatter bf = new BinaryFormatter();
         bf.Serialize(fs, _remainderList);
         fs.Close();
@@ -261,8 +261,8 @@ public class DayController : MonoBehaviour
     private void LoadData()
     {
         List<RemainderContainer> items = new List<RemainderContainer>();
-        if (!File.Exists(savePath)) return;
-        using (Stream stream = File.Open(savePath, FileMode.Open))
+        if (!File.Exists(_savePath)) return;
+        using (Stream stream = File.Open(_savePath, FileMode.Open))
         {
             var bf = new BinaryFormatter();
 

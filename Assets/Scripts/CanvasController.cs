@@ -10,7 +10,7 @@ using UnityEngine.UI;
 public class CanvasController : MonoBehaviour
 {
     public static CanvasController Instance;
-    [SerializeField] private Sprite[] wallpapers;
+    [SerializeField] public List<Sprite> wallpapers;
     [SerializeField] private Image background;
     private Sprite _defaultBg;
     private GameObject _activeCanvas = null;
@@ -19,17 +19,26 @@ public class CanvasController : MonoBehaviour
     public bool isWallpaperDynamic;
     public int defaultBgIndex;
 
-    private string savePath;
+    private string _savePath;
     private void Awake()
     {
         Instance = this;
-        savePath = Application.persistentDataPath + "/wallpaper.dat";
+        _savePath = Application.persistentDataPath + "/wallpaper.dat";
         saveDataContainer = new SaveDataContainer();
         LoadData();
-        _defaultBg = wallpapers[defaultBgIndex];
-        SetWallpaperInitially();
     }
 
+    public void SetWallpaper()
+    {
+        if (defaultBgIndex >= wallpapers.Count) SetDefaultBg(0);
+        else _defaultBg = wallpapers[defaultBgIndex];
+
+        SetWallpaperInitially();
+    }
+    public void AddWallpaper(Sprite image)
+    {
+        wallpapers.Add(image);
+    }
     public void AddActiveCanvas(GameObject canvas)
     {
         _activeCanvas = canvas;
@@ -39,13 +48,11 @@ public class CanvasController : MonoBehaviour
         if (_activeCanvas != null) _activeCanvas.SetActive(false);
         _activeCanvas = null;
     }
-
     public void CloseMainCanvas(GameObject canvas)
     {
         canvas.SetActive(false);
         IsMainCanvasOpen = false;
     }
-
     private void SetWallpaperInitially()
     {
         if (isWallpaperDynamic)
@@ -61,7 +68,6 @@ public class CanvasController : MonoBehaviour
     {
         //Some weather api things;
     }
-
     public void SetDefaultBg(int index)
     {
         defaultBgIndex = index;
@@ -70,12 +76,10 @@ public class CanvasController : MonoBehaviour
         SetWallpaperAsDefault();
         SaveData();
     }
-
     public void SetWallpaperAsDefault()
     {
         background.sprite = _defaultBg;
     }
-
     public void ChangeDynamicOption(bool dynamic)
     {
         isWallpaperDynamic = dynamic;
@@ -84,20 +88,20 @@ public class CanvasController : MonoBehaviour
     }
     private void SaveData()
     {
-        FileStream fs = new FileStream(savePath, FileMode.Create);
+        FileStream fs = new FileStream(_savePath, FileMode.Create);
         BinaryFormatter bf = new BinaryFormatter();
         bf.Serialize(fs, saveDataContainer);
         fs.Close();
     }
     private void LoadData()
     {
-        if (!File.Exists(savePath))
+        if (!File.Exists(_savePath))
         {
             saveDataContainer.defaultBgIndex = defaultBgIndex;
             saveDataContainer.isWallpaperDynamic = isWallpaperDynamic;
             return;
         }
-        using (Stream stream = File.Open(savePath, FileMode.Open))
+        using (Stream stream = File.Open(_savePath, FileMode.Open))
         {
             var bf = new BinaryFormatter();
 
