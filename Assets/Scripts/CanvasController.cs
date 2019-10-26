@@ -6,6 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Debug = System.Diagnostics.Debug;
 
 public class CanvasController : MonoBehaviour
 {
@@ -26,14 +27,22 @@ public class CanvasController : MonoBehaviour
         _savePath = Application.persistentDataPath + "/wallpaper.dat";
         saveDataContainer = new SaveDataContainer();
         LoadData();
+        if (isWallpaperDynamic) WeatherControl.OnWeatherChange += ChangeWallpaperDynamically;
     }
-
+    private void OnDisable()
+    {
+        if (WeatherControl.OnWeatherChange != null) WeatherControl.OnWeatherChange -= ChangeWallpaperDynamically;
+    }
     public void SetWallpaper()
     {
         if (defaultBgIndex >= wallpapers.Count) SetDefaultBg(0);
         else _defaultBg = wallpapers[defaultBgIndex];
 
         SetWallpaperInitially();
+    }
+    private void SetWallpaper(int index)
+    {
+        background.sprite = wallpapers[index];
     }
     public void AddWallpaper(Sprite image)
     {
@@ -66,7 +75,27 @@ public class CanvasController : MonoBehaviour
     }
     public void ChangeWallpaperDynamically()
     {
-        //Some weather api things;
+        var weather = WeatherControl.Instance.GetWeatherInfo();
+        if (weather.weather.Count < 1)
+        {
+            SetWallpaperAsDefault();
+            return;
+        }
+        switch (weather.weather[0].main)
+        {
+            case "Clear":
+                SetWallpaper(0);
+                break;
+            case "Rain":
+                SetWallpaper(1);
+                break;
+            case "Snow":
+                SetWallpaper(2);
+                break;
+            case "Clouds":
+                SetWallpaper(3);
+                break;
+        }
     }
     public void SetDefaultBg(int index)
     {
@@ -84,6 +113,11 @@ public class CanvasController : MonoBehaviour
     {
         isWallpaperDynamic = dynamic;
         saveDataContainer.isWallpaperDynamic = isWallpaperDynamic;
+        if (dynamic) WeatherControl.OnWeatherChange += ChangeWallpaperDynamically;
+        else
+        {
+            if (WeatherControl.OnWeatherChange != null) WeatherControl.OnWeatherChange -= ChangeWallpaperDynamically;
+        }
         SaveData();
     }
     private void SaveData()
