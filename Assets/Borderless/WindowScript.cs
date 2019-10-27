@@ -1,11 +1,13 @@
-﻿using UnityEngine;
+﻿using Controllers;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class WindowScript : MonoBehaviour, IDragHandler
+public class WindowScript : MonoBehaviour, IDragHandler, IPointerClickHandler
 {
-  
+
     private Vector2 _deltaValue = Vector2.zero;
     private bool _maximized;
+    private bool _bordered;
 
     public void OnCloseBtnClick()
     {
@@ -31,15 +33,32 @@ public class WindowScript : MonoBehaviour, IDragHandler
         _maximized = !_maximized;
     }
 
+    public void OnBorderButton()
+    {
+        if (_bordered)
+        {
+            BorderlessWindow.SetFramelessWindow();
+            _bordered = false;
+        }
+        else
+        {
+            BorderlessWindow.SetFramedWindow();
+            _bordered = true;
+        }
+    }
     public void OnDrag(PointerEventData data)
     {
         if (BorderlessWindow.framed)
             return;
-
         _deltaValue += data.delta;
         if (data.dragging)
         {
             BorderlessWindow.MoveWindowPos(_deltaValue, Screen.width, Screen.height);
         }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        if (eventData.button == PointerEventData.InputButton.Left) CanvasController.Instance.CloseActiveCanvas();
     }
 }
