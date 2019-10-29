@@ -13,11 +13,7 @@ public class AspectRatioController : MonoBehaviour
 
     private void Awake()
     {
-        var heightAccordingToWidth = Screen.width / 16.0f * 9.0f;
-        Screen.SetResolution(Screen.width, Mathf.FloorToInt(heightAccordingToWidth), false, 0);
-
-        var widthAccordingToHeight = Screen.height / 9.0f * 16.0f;
-        Screen.SetResolution(Mathf.FloorToInt(widthAccordingToHeight), Screen.height, false, 0);
+        SetReso();
 
         _lastWidth = Screen.width;
         _lastHeight = Screen.height;
@@ -28,27 +24,38 @@ public class AspectRatioController : MonoBehaviour
         int width = Screen.width;
         int height = Screen.height;
 
-        if (_lastHeight != height || _lastWidth != width)
+        if (Screen.currentResolution.width != width || Screen.currentResolution.height != height)
         {
-            _isFixed = false;
-            _time = 0;
-        }
-        else
-        {
-            if (_time >= _fixTime && !_isFixed)
+            if (_lastHeight != height || _lastWidth != width)
             {
-                var heightAccordingToWidth = width / 16.0f * 9.0f;
-                Screen.SetResolution(width, Mathf.FloorToInt(heightAccordingToWidth), false, 0);
-
-                var widthAccordingToHeight = height / 9.0f * 16.0f;
-                Screen.SetResolution(Mathf.FloorToInt(widthAccordingToHeight), height, false, 0);
-
-                _isFixed = true;
+                _isFixed = false;
+                _time = 0;
             }
+            else
+            {
+                if (_time >= _fixTime && !_isFixed)
+                {
+                    SetReso();
 
-            _time += Time.deltaTime;
+                    _isFixed = true;
+                }
+
+                _time += Time.deltaTime;
+            }
         }
+
         _lastWidth = width;
         _lastHeight = height;
+    }
+
+    public static void SetReso(bool fullscreen = false)
+    {
+        int width = Screen.width;
+        int height = Screen.height;
+        var heightAccordingToWidth = width / 16.0f * 9.0f;
+        Screen.SetResolution(width, Mathf.FloorToInt(heightAccordingToWidth), fullscreen, 0);
+
+        var widthAccordingToHeight = height / 9.0f * 16.0f;
+        Screen.SetResolution(Mathf.FloorToInt(widthAccordingToHeight), height, fullscreen, 0);
     }
 }
