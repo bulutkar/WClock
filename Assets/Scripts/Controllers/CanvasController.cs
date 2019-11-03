@@ -23,6 +23,7 @@ namespace Controllers
         private void Awake()
         {
             Instance = this;
+            isWallpaperDynamic = true;
             _savePath = Application.persistentDataPath + "/wallpaper.dat";
             _saveDataContainer = new SaveDataContainer();
             LoadData();

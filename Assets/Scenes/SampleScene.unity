@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -623,8 +623,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1840177566}
   m_HandleRect: {fileID: 1840177565}
   m_Direction: 0
-  m_Value: 0
-  m_Size: 0.9797373
+  m_Value: 1
+  m_Size: 0.98620796
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -820,7 +820,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 201.04807, y: 531.5}
+  m_AnchoredPosition: {x: 201.04771, y: 531.5}
   m_SizeDelta: {x: 402, y: 200}
   m_Pivot: {x: 1, y: 1}
 --- !u!1 &218004992
@@ -5910,6 +5910,11 @@ PrefabInstance:
       propertyPath: background
       value: 
       objectReference: {fileID: 1347864515}
+    - target: {fileID: 5326915498598057083, guid: d9e5ed8acef1b6a46b849bf75ed5311f,
+        type: 3}
+      propertyPath: isWallpaperDynamic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5326915498598057082, guid: d9e5ed8acef1b6a46b849bf75ed5311f,
         type: 3}
       propertyPath: m_LocalPosition.x

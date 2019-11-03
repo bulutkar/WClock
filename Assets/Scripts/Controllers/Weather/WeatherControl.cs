@@ -23,11 +23,12 @@ namespace Controllers.Weather
         {
             cityId = "745044";
             Instance = this;
+            InvokeRepeating(nameof(CheckWeather), 0, 600);
         }
 
         private void Start()
         {
-            InvokeRepeating(nameof(CheckWeather), 0, 600);
+            
         }
 
         public IEnumerator GetWeather()
