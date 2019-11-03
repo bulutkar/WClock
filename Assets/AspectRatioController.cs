@@ -9,7 +9,7 @@ public class AspectRatioController : MonoBehaviour
     private int _lastHeight = 0;
     private float _fixTime = 0.5f;
     private float _time = 0.0f;
-    private bool _isFixed = false;
+    private static bool _isFixed = false;
 
     private void Awake()
     {
@@ -37,7 +37,7 @@ public class AspectRatioController : MonoBehaviour
                 {
                     SetReso();
 
-                    _isFixed = true;
+                    
                 }
 
                 _time += Time.deltaTime;
@@ -57,5 +57,6 @@ public class AspectRatioController : MonoBehaviour
 
         var widthAccordingToHeight = height / 9.0f * 16.0f;
         Screen.SetResolution(Mathf.FloorToInt(widthAccordingToHeight), height, fullscreen, 0);
+        _isFixed = true;
     }
 }

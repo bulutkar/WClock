@@ -31,6 +31,7 @@ public class WindowScript : MonoBehaviour, IDragHandler, IPointerClickHandler
             BorderlessWindow.MaximizeWindow();
 
         _maximized = !_maximized;
+        AspectRatioController.SetReso();
     }
 
     public void OnBorderButton()
